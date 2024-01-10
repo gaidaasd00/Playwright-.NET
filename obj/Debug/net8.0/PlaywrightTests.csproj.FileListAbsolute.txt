@@ -399,3 +399,4 @@
 /Users/alexeygaidykov/PlaywrightTests/obj/Debug/net8.0/PlaywrightTests.pdb
 /Users/alexeygaidykov/PlaywrightTests/obj/Debug/net8.0/PlaywrightTests.genruntimeconfig.cache
 /Users/alexeygaidykov/PlaywrightTests/obj/Debug/net8.0/ref/PlaywrightTests.dll
+/Users/alexeygaidykov/PlaywrightTests/obj/Debug/net8.0/PlaywrightTests.sourcelink.json
