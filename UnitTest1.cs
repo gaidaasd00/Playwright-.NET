@@ -61,13 +61,13 @@ public class Tests : PageTest
         // } else {
         //     Console.WriteLine("Перешли");
         // }
-        Assert.IsNotNull(element,"Осталиись на текущем шаге");
+        Assert.IsNotNull(element,"Перешел на след шаг");
 
         
         
         //input
         var validationError = await Page.WaitForSelectorAsync(".app__field__input--error");
-        Assert.IsNotNull(validationError, "Элемент с ошибкой отображен на странице.");
+        Assert.IsNotNull(validationError, "Элемент с ошибкой не отображен на странице.");
 
         // if (validationError != null) {
         //         Console.WriteLine("Элемент отображен на странице.");
