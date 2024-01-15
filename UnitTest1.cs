@@ -53,40 +53,73 @@ public class Tests : PageTest
         await Page.GetByPlaceholder("Number").ClickAsync();
         await Page.GetByPlaceholder("Number").FillAsync("2222");
         await Page.GetByPlaceholder("Release date").ClickAsync();
-        await Page.GetByPlaceholder("Release date").FillAsync("09.01.2024");
+        await Page.GetByPlaceholder("Release date").FillAsync("10.01.2024");
         await Page.GetByPlaceholder("Valid to").ClickAsync();
         await Page.GetByPlaceholder("Valid to").FillAsync("09.01.2024");
         await ClickContinueButton();
-        await Task.Delay(2000);
+        await Task.Delay(5000);
+        try 
+        {
+        // Ожидание появления элемента с текстом "Fill in your document details"
+        var element = await Page.WaitForSelectorAsync(".h2.mb-4");
 
-        //Checking that there was no transition to the next step - *не могу с этим разобраться*
-        // var element =  await Page.WaitForSelectorAsync(".mb-4");
-        // Assert.IsTrue(element != null,"Fill in your document details не найден");
-        // //Take screen
-        // await Page.ScreenshotAsync(new()
-        // {
-        //      Path = "/Users/alexeygaidykov/PlaywrightTests/screenshot1.png",
-        // });
+        // Проверка, что элемент существует
+        Assert.IsNotNull(element, "Элемент с классом 'h2 mb-4' не найден на странице");
+
+        // Получение текста из элемента
+        var elementText = await element.TextContentAsync();
+        Console.WriteLine($"Текст элемента: {elementText}");
+
+        // Проверка, что текст элемента соответствует ожидаемому значению
+        Assert.That(elementText, Is.EqualTo("Fill in your document details"), "Текст элемента не соответствует ожидаемому значению");
+        }
+        catch (AssertionException ex) 
+        {
+            Console.WriteLine($"не пройден {ex}");
+            await Page.ScreenshotAsync(new()
+            {
+                Path = "/Users/alexeygaidykov/PlaywrightTests/screenshot1.png",
+            });
+
+            throw;
+        }
 
 
         //ValidationError
+        try 
+        {
         var validationError = await Page.WaitForSelectorAsync(".app__field__input--error");
         Assert.IsTrue(validationError != null, "Элемент с ошибкой не отображен на странице.");
-        //Take screen
-        await Page.ScreenshotAsync(new()
+        Console.WriteLine($"{validationError}");
+        } 
+        catch (AssertionException ex) {
+            Console.WriteLine($"Провален {ex}");
+            await Page.ScreenshotAsync(new()
         {
              Path = "/Users/alexeygaidykov/PlaywrightTests/screenshot2.png",
         });
 
+        throw;
+        }
+        
+        
         //Checking for what error text appeared on the screen
+        try 
+        {
+
         var spanElement = await Page.QuerySelectorAsync("span:has-text('Date cannot be later than ')");
         Assert.IsTrue(spanElement != null, "Элемент с текстом ошибки не найден на странице.");
+        Console.WriteLine($"{spanElement}");
 
-        //Take screen
-        await Page.ScreenshotAsync(new()
+        }
+        catch (AssertionException ex) {
+            Console.WriteLine($"Тест провален {ex.Message}");
+             await Page.ScreenshotAsync(new()
         {
              Path = "/Users/alexeygaidykov/PlaywrightTests/screenshot3.png",
         });
 
+        throw;
+        }
     }
 }
