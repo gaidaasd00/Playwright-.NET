@@ -73,7 +73,7 @@ public class Tests : PageTest
         // Проверка, что текст элемента соответствует ожидаемому значению
         Assert.That(elementText, Is.EqualTo("Fill in your document details"), "Текст элемента не соответствует ожидаемому значению");
         }
-        catch (AssertionException ex) 
+        catch (Exception ex) 
         {
             Console.WriteLine($"не пройден {ex}");
             await Page.ScreenshotAsync(new()
@@ -92,7 +92,7 @@ public class Tests : PageTest
         Assert.IsTrue(validationError != null, "Элемент с ошибкой не отображен на странице.");
         Console.WriteLine($"{validationError}");
         } 
-        catch (AssertionException ex) {
+        catch (Exception ex) {
             Console.WriteLine($"Провален {ex}");
             await Page.ScreenshotAsync(new()
         {
@@ -112,7 +112,7 @@ public class Tests : PageTest
         Console.WriteLine($"{spanElement}");
 
         }
-        catch (AssertionException ex) {
+        catch (Exception ex) {
             Console.WriteLine($"Тест провален {ex.Message}");
              await Page.ScreenshotAsync(new()
         {
